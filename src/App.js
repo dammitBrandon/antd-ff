@@ -1,25 +1,27 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import styled from 'styled-components';
+import {Link} from "react-router-dom";
+
+const CenteredContainer = styled.div`
+  height: 100%;
+  min-height: 100vh;
+  width: 60vw;
+  margin: 0 auto;
+  padding-top: 100px;
+  display: block;
+`;
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <CenteredContainer>
+      App
+      <br/>
+      <ul>
+        <li><Link to="/f-form">Final Form</Link></li>
+        <li><Link to="/a-form">Ant Form</Link></li>
+      </ul>
+    </CenteredContainer>
   );
 }
 

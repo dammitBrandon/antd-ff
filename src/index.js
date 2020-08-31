@@ -1,12 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import 'antd/dist/antd.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import { FinalForm } from './FinalForm';
+import { AntForm } from './AntForm';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Router>
+      <Switch>
+        <Route exact path={'/'} component={App} />
+        <Route exact path={'/f-form'} component={FinalForm} />
+        <Route exact path={'/a-form'} component={AntForm} />
+      </Switch>
+    </Router>
   </React.StrictMode>,
   document.getElementById('root')
 );
