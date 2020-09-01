@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Form, Form as AForm, Input } from 'antd';
-import { Field as FField, Form as FForm } from 'react-final-form';
+import { FormSpy, Field as FField, Form as FForm } from 'react-final-form';
+import setFieldData from 'final-form-set-field-data'
 import styled from 'styled-components';
 import emailValidator from 'email-validator';
 import { FORM_ERROR } from 'final-form';
@@ -68,30 +69,41 @@ const onSubmit = async values => {
   return { [FORM_ERROR]: 'Login Failed', email: 'Unknown email' }
 }
 
+const WarningEngine = ({ mutators: { setFieldData } }) => (
+  <FormSpy
+    subscription={{ values: true }}
+    onChange={({ values }) => {
+      setFieldData('email', {
+        warning: yahoo(values.email)
+      })
+    }}
+  />
+)
+
 export const AntForm = () => {
-  const [form] = AForm.useForm();
-  console.info('AntForm, form: ', form);
 
   return (
     <CenteredContainer>
       <FForm
         name="ant-final-form"
         onSubmit={onSubmit}
+        mutators={{ setFieldData }}
         render={(props) => {
+          const {handleSubmit, form, submitError, submitErrors, error, errors} = props;
           return (
-            <AForm onFinish={props.handleSubmit}>
-              {props.submitError && <div className="error">{props.submitError}</div>}
+            <AForm onFinish={handleSubmit}>
+              {submitError && <div className="error">{submitError}</div>}
               <FField name="email" type="text" placeholder="test@email.edu" label="email" validate={composeValidators(required, email)}>
                 {({input, placeholder, label, meta})=> (
                   <>
                     <Form.Item label={label}
                                hasFeedback
-                               validateStatus={((meta.error && meta.submitFailed) || (meta.submitError && meta.submitFailed)) ? 'error' :
+                               validateStatus={((meta.submitError || meta.error) && meta.submitFailed) ? 'error' :
                                  (meta.valid && meta.submitSucceeded) ? 'success' :
-                                   (meta.validating) ? 'warning' : ''
+                                   (meta.data.warning) ? 'warning' : ''
                                }
-                               help={(meta.error || meta.submitError) && meta.touched && (
-                                 <span style={{color: '#ff4d4f'}}>{meta.error || meta.submitError}</span>
+                               help={(meta.data.warning || meta.error || meta.submitError) && meta.touched && (
+                                 <span>{meta.data.warning || meta.error || meta.submitError}</span>
                                )}
                     >
                       <Input {...input} placeholder={placeholder} label={label} />
@@ -107,9 +119,9 @@ export const AntForm = () => {
               >
                 Submit
               </Button>
-              <pre>{JSON.stringify(props.submitError, 0, 2)}</pre>
-              errors: <pre>{JSON.stringify(props.errors, 0, 2)}</pre>
-              error: <pre>{JSON.stringify(props.error, 0, 2)}</pre>
+              <br/>
+              props: <pre>{JSON.stringify(props, 0, 2)}</pre>
+              <WarningEngine mutators={form.mutators}/>
             </AForm>
           )
         }}
