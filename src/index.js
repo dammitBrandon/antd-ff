@@ -7,6 +7,7 @@ import * as serviceWorker from './serviceWorker';
 import { FinalForm } from './FinalForm';
 import { AntForm } from './AntForm';
 import { WarningForm } from './WarningForm';
+import { SelectForm } from './SelectForm';
 import {
   BrowserRouter as Router,
   Switch,
@@ -21,6 +22,7 @@ ReactDOM.render(
         <Route exact path={'/f-form'} component={FinalForm} />
         <Route exact path={'/a-form'} component={AntForm} />
         <Route exact path={'/w-form'} component={WarningForm} />
+        <Route exact path={'/s-form'} component={SelectForm} />
       </Switch>
     </Router>
   </React.StrictMode>,
