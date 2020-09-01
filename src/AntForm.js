@@ -2,9 +2,23 @@ import React, { useState, useEffect } from 'react';
 import { Button, Form, Form as AForm, Input } from 'antd';
 import { FormSpy, Field as FField, Form as FForm } from 'react-final-form';
 import setFieldData from 'final-form-set-field-data'
+import ReactCodeInput from 'react-code-input';
 import styled from 'styled-components';
 import emailValidator from 'email-validator';
 import { FORM_ERROR } from 'final-form';
+
+export const alphaNumeric = value => {
+  return value && /[^a-zA-Z0-9 ]/i.test(value) ? 'Only alphanumeric characters' : undefined;
+};
+
+export const maxLength = max => value =>
+  value && value.length > max ? `Must be ${max} characters or less` : undefined;
+export const maxLength15 = maxLength(15);
+
+export const minLength = min => value =>
+  value && value.length < min ? `Must be ${min} characters or more` : undefined;
+
+export const minLength2 = minLength(2);
 
 export const required = value => {
   return value || typeof value === 'number' ? undefined : 'Required';
@@ -25,6 +39,41 @@ export const yahoo = value => {
     ? 'Really? You still use Yahoo for your email?'
     : undefined;
 };
+
+const AInput = ({input, placeholder, label, meta})=> (
+  <>
+    <Form.Item label={label}
+               hasFeedback
+               validateStatus={((meta.submitError || meta.error) && meta.submitFailed) ? 'error' :
+                 (meta.valid && meta.submitSucceeded) ? 'success' :
+                   (meta.data.warning) ? 'warning' : ''
+               }
+               help={(meta.data.warning || meta.error || meta.submitError) && meta.touched && (
+                 <span>{meta.data.warning || meta.error || meta.submitError}</span>
+               )}
+    >
+      <Input {...input} placeholder={placeholder} label={label} />
+    </Form.Item>
+    <pre>{JSON.stringify(meta, 0, 2)}</pre>
+  </>
+);
+
+const CodeInput = ({input, meta, label}) => (
+  <>
+    <Form.Item label={label}
+               hasFeedback
+               validateStatus={((meta.submitError || meta.error) && meta.submitFailed) ? 'error' :
+                 (meta.valid && meta.submitSucceeded) ? 'success' :
+                   (meta.data.warning) ? 'warning' : ''
+               }
+               help={(meta.data.warning || meta.error || meta.submitError) && meta.touched && (
+                 <span>{meta.data.warning || meta.error || meta.submitError}</span>
+               )}
+    >
+      <ReactCodeInput {...input} type={'number'} fields={6} isValid={meta.valid} />
+    </Form.Item>
+  </>
+)
 
 export const composeValidators = (...validators) => (value, allValues, fieldState) => {
   return validators.reduce(
@@ -66,7 +115,7 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 const onSubmit = async values => {
   await sleep(300)
   // window.alert(JSON.stringify(values, 0, 2))
-  return { [FORM_ERROR]: 'Login Failed', email: 'Unknown email' }
+  return { [FORM_ERROR]: 'Login Failed', verificationCode: 'Unknown Code' }
 }
 
 const WarningEngine = ({ mutators: { setFieldData } }) => (
@@ -93,25 +142,30 @@ export const AntForm = () => {
           return (
             <AForm onFinish={handleSubmit}>
               {submitError && <div className="error">{submitError}</div>}
-              <FField name="email" type="text" placeholder="test@email.edu" label="email" validate={composeValidators(required, email)}>
-                {({input, placeholder, label, meta})=> (
-                  <>
-                    <Form.Item label={label}
-                               hasFeedback
-                               validateStatus={((meta.submitError || meta.error) && meta.submitFailed) ? 'error' :
-                                 (meta.valid && meta.submitSucceeded) ? 'success' :
-                                   (meta.data.warning) ? 'warning' : ''
-                               }
-                               help={(meta.data.warning || meta.error || meta.submitError) && meta.touched && (
-                                 <span>{meta.data.warning || meta.error || meta.submitError}</span>
-                               )}
-                    >
-                      <Input {...input} placeholder={placeholder} label={label} />
-                    </Form.Item>
-                    <pre>{JSON.stringify(meta, 0, 2)}</pre>
-                  </>
-                )}
-              </FField>
+              <FField
+                name="firstName"
+                type="text"
+                placeholder="John"
+                label="firstName"
+                validate={composeValidators(required, minLength2, maxLength15)}
+                component={AInput}
+              />
+              
+              <FField
+                name="email"
+                type="text"
+                placeholder="test@email.edu"
+                label="email"
+                validate={composeValidators(required, email)}
+                component={AInput}
+              />
+              
+              <FField
+                name="verificationCode"
+                type="number"
+                label="verificationCode"
+                component={CodeInput}
+              />
               
               <Button
                 type="primary"
@@ -120,7 +174,7 @@ export const AntForm = () => {
                 Submit
               </Button>
               <br/>
-              props: <pre>{JSON.stringify(props, 0, 2)}</pre>
+              values: <pre>{JSON.stringify(props.values, 0, 2)}</pre>
               <WarningEngine mutators={form.mutators}/>
             </AForm>
           )
