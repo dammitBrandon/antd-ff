@@ -8,6 +8,9 @@ import { FinalForm } from './FinalForm';
 import { AntForm } from './AntForm';
 import { WarningForm } from './WarningForm';
 import { SelectForm } from './SelectForm';
+import { ListForm } from './ListForm';
+import { ModalFormExample } from './ModalForm';
+import {AntSelectFForm} from './AntSelectFForm';
 import {
   BrowserRouter as Router,
   Switch,
@@ -23,6 +26,9 @@ ReactDOM.render(
         <Route exact path={'/a-form'} component={AntForm} />
         <Route exact path={'/w-form'} component={WarningForm} />
         <Route exact path={'/s-form'} component={SelectForm} />
+        <Route exact path={'/l-form'} component={ListForm} />
+        <Route exact path={'/m-form'} component={ModalFormExample} />
+        <Route exact path={'/as-fform'} component={AntSelectFForm} />
       </Switch>
     </Router>
   </React.StrictMode>,

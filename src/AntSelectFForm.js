@@ -1,23 +1,15 @@
 import React, { useState } from 'react';
 import { Button, Form as AForm, Input, Select, Tag } from 'antd';
-import { FormSpy, Field as FField, Form as FForm } from 'react-final-form';
-import setFieldData from 'final-form-set-field-data'
+import { FormSpy, Field as FField, Form as FForm, useField } from 'react-final-form';
 import styled from 'styled-components';
 import { FORM_ERROR } from 'final-form';
-
-// const { Option } = Select;
-// const options = [];
-// for (let i=10; i < 36; i++) {
-//   let item = i.toString(36) + i;
-//   options.push(item);
-// }
 
 const OPTIONS = [
   'Algebra 1',
   'Geometry',
   'Chemistry',
   'Biology'
-  ];
+];
 
 const OPTIONS_OBJ = {
   'Algebra 1': 'gold',
@@ -25,6 +17,29 @@ const OPTIONS_OBJ = {
   'Chemistry': 'lime',
   'Biology': 'cyan'
 };
+
+export const SelectControl = ({input, placeholder, label, meta: {error, touched}, disabled, name, tagRender, mode, options}) => {
+  
+  return (
+    <AForm.Item
+      label={name}
+      validateStatus={error && touched ? 'error' : ''}
+      help={error && touched && (
+        <span className="error">{error}</span>
+      )}
+    >
+      <Select {...input} mode={mode} placeholder={placeholder} tagRender={tagRender} >
+        {options
+          .filter(o => !input.value.includes(o))
+          .map(item => (
+            <Select.Option key={item} value={item}>
+              {item}
+            </Select.Option>
+          ))}
+      </Select>
+    </AForm.Item>
+  )
+}
 
 const tagRender = (props) => {
   const {label, value, closable, onClose, color} = props;
@@ -53,46 +68,38 @@ const onSubmit = async values => {
   // return { [FORM_ERROR]: 'Login Failed', verificationCode: 'Unknown Code' }
 }
 
-export const SelectForm = () => {
-  const [selectedItems, setSelectedItems] = useState([]);
-  console.log('selectedItems: ', selectedItems);
-  
-  const handleChange = (selectedItems) => {
-    console.log('handleChange, selectedItems: ', selectedItems);
-    setSelectedItems(selectedItems);
-  };
-  
-  const filteredOptions = OPTIONS.filter(option => !selectedItems.includes(option));
-  
+export const AntSelectFForm = () => {
+
   return (
     <CenteredContainer>
       <FForm
-        name="select-form"
+        name="ant-select-fform"
         onSubmit={onSubmit}
-        render={({submitError, handleSubmit}) => {
+        render={({submitError, handleSubmit, form}) => {
           return (
             <AForm onFinish={handleSubmit}>
               {submitError && <div className="error">{submitError}</div>}
-              <Select
-                value={selectedItems}
-                mode="tags"
-                style={{ width: '100%' }}
-                onChange={handleChange}
-                tagRender={tagRender}
+              
+              <FField
+                name="courses"
+                render={(props) => {
+                  return (
+                    <div>
+                      test
+                    </div>
+                  )
+                }}
+              />
+              <Button
+                type="primary"
+                htmlType="submit"
               >
-                {filteredOptions.map(item => (
-                  <Select.Option key={item} value={item}>
-                    {item}
-                  </Select.Option>
-                ))}
-              </Select>
-              <Button type="primary" htmlType="submit">
                 Submit
               </Button>
             </AForm>
-          );
+          )
         }}
       />
     </CenteredContainer>
-  );
+  )
 }
