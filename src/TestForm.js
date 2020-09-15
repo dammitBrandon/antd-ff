@@ -63,12 +63,18 @@ const CheckboxArrayInput = ({fields, options}) => {
   
   return (
     <div>
-      {options.map((option) => (
-        <div>
-          <input type="checkbox" key={option} onClick={event => toggle(event, option)}/>
-          {option}
-        </div>
-      ))}
+      {options.map((option, index) => {
+        console.log('CheckboxArrayInput, option: ', option, index);
+        
+        return (
+          <div>
+            <AForm.Item label={option.name}>
+              <Input type="checkbox" value={option} onChange={event => toggle(event, option)} />
+              {option}
+            </AForm.Item>
+          </div>
+        )
+      })}
     </div>
   )
 };
