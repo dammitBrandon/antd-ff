@@ -7,6 +7,8 @@ import setFieldData from 'final-form-set-field-data'
 import styled from 'styled-components';
 import { FORM_ERROR } from 'final-form';
 
+const { CheckableTag } = Tag;
+
 const GOALS = [
   'Increase engagement',
   'Performance tracking',
@@ -64,10 +66,9 @@ const CheckboxArrayInput = ({fields, options}) => {
   return (
     <div>
       {options.map((option, index) => {
-        console.log('CheckboxArrayInput, option: ', option, index);
         
         return (
-          <div>
+          <div key={index}>
             <AForm.Item label={option.name}>
               <Input type="checkbox" value={option} onChange={event => toggle(event, option)} />
               {option}
@@ -77,6 +78,59 @@ const CheckboxArrayInput = ({fields, options}) => {
       })}
     </div>
   )
+};
+
+const CheckTagInput = ({input: {isChecked, ...input}, meta, option, onChange}) => {
+  console.log('#CheckTagInput, input: ', input);
+  
+  
+  
+  return (
+    <CheckableTag
+      key={input.name}
+      checked={isChecked}
+      onChange={onChange}
+      {...input}
+      value={option}
+    >
+     {option}
+    </CheckableTag>
+  )
+}
+
+const CheckableTagArrayInput = ({fields, options}) => {
+  
+  const onCheckToggle = (option, checked) => {
+    
+    if (checked) {
+      if (fields.value && !fields.value.indexOf(option) > -1) {
+        fields.push(option);
+      } else if (GOALS.includes(option)) {
+        fields.push(option);
+      }
+    } else if (!checked && (fields.value && fields.value.indexOf(option) > -1)) {
+      fields.remove(fields.value.indexOf(option));
+    }
+    
+    
+  };
+  
+  return (
+    <div>
+      {options.map((option, index) => {
+        
+        return (
+          <CheckableTag
+            key={option}
+            checked={fields.value && fields.value.indexOf(option) > -1}
+            onChange={clicked => onCheckToggle(option, clicked)}
+          >
+            {option}
+          </CheckableTag>
+        )
+      })}
+    </div>
+  );
 };
 
 export const TestForm = () => {
@@ -94,11 +148,10 @@ export const TestForm = () => {
             <AForm onFinish={handleSubmit}>
               {submitError && <div className="error">{submitError}</div>}
               <FFieldArray
-                name="goals"
-                component={CheckboxArrayInput}
+                name={"goalTags"}
+                component={CheckableTagArrayInput}
                 options={GOALS}
               />
-              
               
               
               <Button type="primary" htmlType="submit">
