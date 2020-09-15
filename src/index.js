@@ -11,6 +11,7 @@ import { SelectForm } from './SelectForm';
 import { ListForm } from './ListForm';
 import { ModalFormExample } from './ModalForm';
 import {AntSelectFForm} from './AntSelectFForm';
+import {TestForm} from './TestForm';
 import {
   BrowserRouter as Router,
   Switch,
@@ -29,6 +30,8 @@ ReactDOM.render(
         <Route exact path={'/l-form'} component={ListForm} />
         <Route exact path={'/m-form'} component={ModalFormExample} />
         <Route exact path={'/as-fform'} component={AntSelectFForm} />
+        <Route exact path={'/test'} component={TestForm} />
+        
       </Switch>
     </Router>
   </React.StrictMode>,
