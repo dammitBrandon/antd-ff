@@ -1,8 +1,17 @@
-import React from 'react';
-import { Layout, Menu } from 'antd';
+import React, {useState} from 'react';
+import { Button, Layout, Menu, Drawer, Typography } from 'antd';
 const { Content, Sider, Header, Footer } = Layout;
+const { Link } = Typography;
 
 export const TeacherDashboardScreen = () => {
+  const [visible, setVisible] = useState(false);
+  const showDrawer = () => {
+    setVisible(true);
+  };
+  const onClose = () => {
+    setVisible(false);
+  };
+  
   return (
     <Layout className="layout" style={{ height: '100vh'}}>
       <Sider
@@ -37,11 +46,27 @@ export const TeacherDashboardScreen = () => {
       
       <Layout className="site-layout" style={{marginLeft: 200}}>
         <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
+          <Link style={{right: 0}} onClick={showDrawer}>
+            show recent activity
+          </Link>
           <div style={{ padding: 24, textAlign: 'center', background: '#fff' }}>
             Main Content Layout
           </div>
         </Content>
       </Layout>
+  
+      <Drawer
+        title="Recent Activity"
+        placement="right"
+        onClose={onClose}
+        visible={visible}
+        closable
+        bodyStyle={{ paddingBottom: 80 }}
+        maskStyle={{ background: 'none' }}
+        width="300"
+        >
+        Drawer
+      </Drawer>
     </Layout>
   )
 };
