@@ -1,4 +1,5 @@
 import React from 'react';
+import { Provider } from 'react-redux'
 import ReactDOM from 'react-dom';
 import './index.css';
 import 'antd/dist/antd.css';
@@ -13,6 +14,9 @@ import { ModalFormExample } from './ModalForm';
 import {AntSelectFForm} from './AntSelectFForm';
 import {TestForm} from './TestForm';
 import {TeacherDashboardScreen} from './TeacherDashboardScreen';
+import WizardForm from './nested-wizard-form';
+
+import store from './store';
 
 import {
   BrowserRouter as Router,
@@ -22,21 +26,28 @@ import {
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router>
-      <Switch>
-        <Route exact path={'/'} component={App} />
-        <Route exact path={'/f-form'} component={FinalForm} />
-        <Route exact path={'/a-form'} component={AntForm} />
-        <Route exact path={'/w-form'} component={WarningForm} />
-        <Route exact path={'/s-form'} component={SelectForm} />
-        <Route exact path={'/l-form'} component={ListForm} />
-        <Route exact path={'/m-form'} component={ModalFormExample} />
-        <Route exact path={'/as-fform'} component={AntSelectFForm} />
-        <Route exact path={'/test'} component={TestForm} />
-        <Route exact path={'/dashboard'} component={TeacherDashboardScreen} />
-        
-      </Switch>
-    </Router>
+    <Provider store={store}>
+      <Router>
+        <Switch>
+          <Route exact path={'/'} component={App} />
+          <Route exact path={'/f-form'} component={FinalForm} />
+          <Route exact path={'/a-form'} component={AntForm} />
+          <Route exact path={'/w-form'} component={WarningForm} />
+          <Route exact path={'/s-form'} component={SelectForm} />
+          <Route exact path={'/l-form'} component={ListForm} />
+          <Route exact path={'/m-form'} component={ModalFormExample} />
+          <Route exact path={'/as-fform'} component={AntSelectFForm} />
+          <Route exact path={'/test'} component={TestForm} />
+          <Route exact path={'/dashboard'} component={TeacherDashboardScreen} />
+          <Route path='/on-boarding/:step'
+                 render={() => (
+                   <WizardForm />
+                 )}
+          />
+          
+        </Switch>
+      </Router>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

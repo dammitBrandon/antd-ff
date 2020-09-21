@@ -20,6 +20,7 @@ function App() {
       <ul>
         <li><Link to="/f-form">Final Form</Link></li>
         <li><Link to="/a-form">Ant Form</Link></li>
+        <li><Link to="/on-boarding/0">On Boarding Wizard Form</Link></li>
       </ul>
     </CenteredContainer>
   );

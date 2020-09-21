@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import { Button, Form as AForm, Input, Select, Tag } from 'antd';
-import { FormSpy, Field as FField, Form as FForm } from 'react-final-form';
-import setFieldData from 'final-form-set-field-data'
+import { Button, Form as AForm, Select, Tag } from 'antd';
+import {  Form as FForm } from 'react-final-form';
 import styled from 'styled-components';
-import { FORM_ERROR } from 'final-form';
 
 // const { Option } = Select;
 // const options = [];
@@ -27,7 +25,7 @@ const OPTIONS_OBJ = {
 };
 
 const tagRender = (props) => {
-  const {label, value, closable, onClose, color} = props;
+  const {label, value, closable, onClose} = props;
   console.log('tagRender, props: ', props);
   return (
     <Tag color={OPTIONS_OBJ[value]} closable={closable} onClose={onClose} style={{marginRight: 3}}>

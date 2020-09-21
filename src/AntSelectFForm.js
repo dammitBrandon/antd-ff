@@ -1,22 +1,21 @@
-import React, { useState } from 'react';
-import { Button, Form as AForm, Input, Select, Tag } from 'antd';
-import { FormSpy, Field as FField, Form as FForm, useField } from 'react-final-form';
+import React from 'react';
+import { Button, Form as AForm, Select } from 'antd';
+import { Field as FField, Form as FForm} from 'react-final-form';
 import styled from 'styled-components';
-import { FORM_ERROR } from 'final-form';
 
-const OPTIONS = [
-  'Algebra 1',
-  'Geometry',
-  'Chemistry',
-  'Biology'
-];
+// const OPTIONS = [
+//   'Algebra 1',
+//   'Geometry',
+//   'Chemistry',
+//   'Biology'
+// ];
 
-const OPTIONS_OBJ = {
-  'Algebra 1': 'gold',
-  'Geometry': 'yellow',
-  'Chemistry': 'lime',
-  'Biology': 'cyan'
-};
+// const OPTIONS_OBJ = {
+//   'Algebra 1': 'gold',
+//   'Geometry': 'yellow',
+//   'Chemistry': 'lime',
+//   'Biology': 'cyan'
+// };
 
 export const SelectControl = ({input, placeholder, label, meta: {error, touched}, disabled, name, tagRender, mode, options}) => {
   
@@ -41,15 +40,15 @@ export const SelectControl = ({input, placeholder, label, meta: {error, touched}
   )
 }
 
-const tagRender = (props) => {
-  const {label, value, closable, onClose, color} = props;
-  console.log('tagRender, props: ', props);
-  return (
-    <Tag color={OPTIONS_OBJ[value]} closable={closable} onClose={onClose} style={{marginRight: 3}}>
-      {label}
-    </Tag>
-  )
-}
+// const tagRender = (props) => {
+//   const {label, value, closable, onClose, color} = props;
+//   console.log('tagRender, props: ', props);
+//   return (
+//     <Tag color={OPTIONS_OBJ[value]} closable={closable} onClose={onClose} style={{marginRight: 3}}>
+//       {label}
+//     </Tag>
+//   )
+// }
 
 const CenteredContainer = styled.div`
   height: 100%;

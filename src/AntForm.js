@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Button, Form, Form as AForm, Input } from 'antd';
 import { FormSpy, Field as FField, Form as FForm } from 'react-final-form';
 import setFieldData from 'final-form-set-field-data'
@@ -91,24 +91,24 @@ const CenteredContainer = styled.div`
   display: block;
 `;
 
-const formItemLayout = {
-  labelCol: {
-    span: 4,
-  },
-  wrapperCol: {
-    span: 8,
-  },
-};
-
-const formTailLayout = {
-  labelCol: {
-    span: 4,
-  },
-  wrapperCol: {
-    span: 8,
-    offset: 4,
-  },
-};
+// const formItemLayout = {
+//   labelCol: {
+//     span: 4,
+//   },
+//   wrapperCol: {
+//     span: 8,
+//   },
+// };
+//
+// const formTailLayout = {
+//   labelCol: {
+//     span: 4,
+//   },
+//   wrapperCol: {
+//     span: 8,
+//     offset: 4,
+//   },
+// };
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
@@ -138,7 +138,7 @@ export const AntForm = () => {
         onSubmit={onSubmit}
         mutators={{ setFieldData }}
         render={(props) => {
-          const {handleSubmit, form, submitError, submitErrors, error, errors} = props;
+          const {handleSubmit, form, submitError} = props;
           return (
             <AForm onFinish={handleSubmit}>
               {submitError && <div className="error">{submitError}</div>}

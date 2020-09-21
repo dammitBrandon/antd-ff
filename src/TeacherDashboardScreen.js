@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import { Button, Layout, Menu, Drawer, Typography } from 'antd';
-const { Content, Sider, Header, Footer } = Layout;
+import { Layout, Menu, Drawer, Typography, Row, Col } from 'antd';
+const { Content, Sider, Header } = Layout;
 const { Link } = Typography;
 
 export const TeacherDashboardScreen = () => {
@@ -50,7 +50,14 @@ export const TeacherDashboardScreen = () => {
             show recent activity
           </Link>
           <div style={{ padding: 24, textAlign: 'center', background: '#fff' }}>
-            Main Content Layout
+            <Row gutter={[16, 16]}>
+              <Col span={16} style={{background: 'red'}}>Col-8</Col>
+              <Col span={6} offset={1} style={{background: 'yellow'}}>Col-6</Col>
+            </Row>
+            <Row gutter={[16, 16]}>
+              <Col span={10} style={{background: 'pink'}}>Col-8</Col>
+              <Col span={10} offset={2} style={{backgroundColor: 'orange'}}>Col-8</Col>
+            </Row>
           </div>
         </Content>
       </Layout>

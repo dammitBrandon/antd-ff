@@ -3,7 +3,6 @@ import { Button, Form, Input } from 'antd';
 import { Field as FField, Form as FForm } from 'react-final-form';
 import './App.css';
 import 'antd/dist/antd.css';
-import arrayMutators from 'final-form-arrays';
 import setFieldData from 'final-form-set-field-data'
 import { FORM_ERROR } from 'final-form'
 import styled from 'styled-components';
@@ -45,18 +44,18 @@ const formItemLayout = {
   },
 };
 
-const required = value => (value ? undefined : 'Required')
-
-const validateMessages = {
-  required: '${label} is required!!!',
-  types: {
-    email: '${label} is not validate email!',
-    number: '${label} is not a validate number!',
-  },
-  number: {
-    range: '${label} must be between ${min} and ${max}',
-  },
-};
+// const required = value => (value ? undefined : 'Required')
+//
+// const validateMessages = {
+//   required: '${label} is required!!!',
+//   types: {
+//     email: '${label} is not validate email!',
+//     number: '${label} is not a validate number!',
+//   },
+//   number: {
+//     range: '${label} must be between ${min} and ${max}',
+//   },
+// };
 
 export const FinalForm = () => {
   return (
@@ -72,7 +71,7 @@ export const FinalForm = () => {
         mutators={{
           setFieldData
         }}
-        render={({submitError, handleSubmit, mutators, submitting, pristine, values}) => {
+        render={({submitError, handleSubmit, values}) => {
           return (
             <Form
               onFinish={handleSubmit}

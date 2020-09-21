@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import { Button, Form, Form as AForm, Input, Select, Tag, Space, Drawer, Typography, Col, Row } from 'antd';
-import { FormSpy, Field as FField, Form as FForm } from 'react-final-form';
-import setFieldData from 'final-form-set-field-data'
+import { Button, Form, Form as AForm, Input, Drawer, Typography, Col, Row } from 'antd';
+import { Field as FField, Form as FForm } from 'react-final-form';
 import styled from 'styled-components';
 import { FORM_ERROR } from 'final-form';
 import { composeValidators, email, required } from './AntForm';
 import { PlusOutlined } from '@ant-design/icons';
 
-const { Text, Link } = Typography;
+const { Link } = Typography;
 
 const CenteredContainer = styled.div`
   height: 100%;
@@ -63,7 +62,6 @@ const ASearch = ({input, placeholder, label, meta}) => (
 );
 
 const DrawerForm = () => {
-  const [form] = Form.useForm();
 
   return (
     <>
@@ -128,7 +126,7 @@ const onSubmit = async values => {
 }
 
 export const ListForm = () => {
-  const [students, setStudents] = useState([]);
+  // const [students, setStudents] = useState([]);
   const [visible, setVisible] = useState(false);
   
   const showDrawer = () => {
