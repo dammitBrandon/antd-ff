@@ -27,26 +27,41 @@ export const handleOnBoardingFailed = payload => ({
   isLoading: false,
 });
 
-export function* onHandleOnBoardingRequest({payload: { test } }) {
-  console.log('#onHandleOnBoardingRequest, test: ', test);
+export function* onHandleOnBoardingRequest({payload: { email } }) {
+  console.log('#onHandleOnBoardingRequest, email: ', email);
   
   try {
     console.log('#onHandleOnBoardingRequest, try block');
     
-    const response = yield call(request.post, '/on-boarding', {test});
+    const response = yield call(request.post, '/on-boarding/verify-email', {email});
     
     console.log('#onHandleOnBoardingRequest, response: ', response);
     yield put(handleOnBoardingSuccess());
     window.alert('ON BOARDING SUCCESS!');
   } catch (err) {
     console.error('#onHandleOnBoardingRequest, err: ', err);
-  
-    if (err.response.status === 422) {
+    
+    if (err.response && err.response.status === 422) {
       return yield put({
         type: ONBOARDING_SUCCESS,
         payload: {[FORM_ERROR]: 'Please check form errors', ...formatErrors(err.response.data.error)},
       });
     }
+    
+    if (err.response && err.response.status === 409) {
+      return yield put({
+        type: ONBOARDING_SUCCESS,
+        payload: {[FORM_ERROR]: 'Please check form errors', ...formatErrors(err.response.data.error)},
+      });
+    }
+  
+    if (err.message && err.message === 'Network Error') {
+      return yield put({
+        type: ONBOARDING_SUCCESS,
+        payload: {[FORM_ERROR]: 'Check your network connection'},
+      });
+    }
+    
   }
 }
 

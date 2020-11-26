@@ -8,7 +8,7 @@ import styled from 'styled-components';
 import OnBoardingWizard from './onboarding-wizard';
 import {EnterValueForm} from './EnterValueForm';
 import {VerifyEntryForm} from './VerifyEntryForm';
-import { NestedTestForm } from './TestForm';
+import { NestedEmailForm } from './EmailForm';
 
 import {ONBOARDING_REQUEST, ONBOARDING_SUCCESS, ONBOARDING_FAILURE} from '../modules/onBoarding/onBoardingRedux';
 
@@ -20,6 +20,10 @@ const CenteredContainer = styled.div`
   padding-top: 100px;
   display: block;
 `;
+
+const resolveErrors = asyncFn => (...args) => {
+  asyncFn(...args).then(success => success, error => {console.log('error: ', error); return Promise.resolve(error);})
+}
 
 class WizardForm extends Component {
   render() {
@@ -39,7 +43,7 @@ class WizardForm extends Component {
               onSubmit={onSubmit}
             >
               <OnBoardingWizard.Page>
-                <NestedTestForm />
+                <NestedEmailForm />
               </OnBoardingWizard.Page>
             </OnBoardingWizard>
           </CenteredContainer>

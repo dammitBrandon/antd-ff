@@ -14,6 +14,7 @@ import { ModalFormExample } from './ModalForm';
 import {AntSelectFForm} from './AntSelectFForm';
 import {TestForm} from './TestForm';
 import {TeacherDashboardScreen} from './TeacherDashboardScreen';
+import {CreateQuestionSetScreen} from './create-question-set/CreateQuestionSetScreen';
 import WizardForm from './nested-wizard-form';
 
 import store from './store';
@@ -39,6 +40,7 @@ ReactDOM.render(
           <Route exact path={'/as-fform'} component={AntSelectFForm} />
           <Route exact path={'/test'} component={TestForm} />
           <Route exact path={'/dashboard'} component={TeacherDashboardScreen} />
+          <Route exact path={'/create-question-set'} component={CreateQuestionSetScreen} />
           <Route path='/on-boarding/:step'
                  render={() => (
                    <WizardForm />
