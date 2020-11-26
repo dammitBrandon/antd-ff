@@ -4,9 +4,11 @@ import { Field as FField, Form as FForm } from 'react-final-form';
 import { FieldArray as FFieldArray } from 'react-final-form-arrays';
 import styled from 'styled-components';
 import { InputControl, RatingControl, SimpleSelectControl } from '../lib/Fields';
-import { Button, Empty, Form, Row, Col, Space, Divider } from 'antd';
+import { Button, Empty, Form as AForm, Row, Col, Space, Divider, Form } from 'antd';
 
 import { MinusCircleOutlined, PlusOutlined, MinusOutlined, FireOutlined, RightOutlined } from '@ant-design/icons';
+
+import { QuestionItem } from './QuestionItem';
 
 // ICONS FOR DIFFICULTY
 const customIcons = {
@@ -27,8 +29,7 @@ export const StyledSpace = styled(Space)`
 
 export const StyledDivider = styled(Divider)`
   &.ant-divider {
-    background: transparent linear-gradient(101deg, #e41e84 0%, #ff6633 100%) 0% 0% no-repeat
-      padding-box;
+    background: transparent linear-gradient(101deg, #e41e84 0%, #ff6633 100%) 0% 0% no-repeat padding-box;
   }
 `;
 
@@ -42,6 +43,7 @@ const onSubmit = async values => {
 export const CreateQuestionSetForm = ({ isLoading }) => (
   <FForm
     name="create-question-set-form"
+    initialValues={{questions: []}}
     mutators={{
       ...arrayMutators
     }}
@@ -50,160 +52,67 @@ export const CreateQuestionSetForm = ({ isLoading }) => (
     render={({
                submitError,
                handleSubmit,
+               form: {
+                 mutators: { push, pop }
+               },
                submitting,
                hasValidationErrors,
                hasSubmitErrors,
-               dirtySinceLastSubmit
+               dirtySinceLastSubmit,
+               values
              }) => (
-      <div style={{}}>
-        <div style={{backgroundColor: '#FFF'}}>
+      <AForm onFinish={handleSubmit}>
+        <div>
+          <FFieldArray name="questions">
+            {({ fields, meta }) =>
+              fields.map((name, index) => (
+                <div key={name}>
+                  Question {index + 1}
+                </div>
+              ))
+            }
+          </FFieldArray>
+          {values.questions.length > 0 &&
           <Row gutter={[{ xs: 8, sm: 16, md: 24, lg: 32 }, 16]}>
-            <Col span={8}>
-              <FField
-                name="question.questionStatement"
-                component={InputControl}
-                type="text"
-                placeholder="What is a Molecule?"
-                // validate={validations.required}
-              />
-              <Button type="link" onClick={() => {console.log('add new answer to this question');}}>
-                <PlusOutlined /> Add Answer
-              </Button>
+            <Col span={24}>
+              <Form.Item>
+                <Button
+                  style={{width: '100%'}}
+                  type="dashed"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    push('questions', null);
+                  }}
+                >
+                  <PlusOutlined/> Add Question
+                </Button>
+              </Form.Item>
             </Col>
-            <Col span={4}>
-              <FField
-                name="question.Format"
-                component={SimpleSelectControl}
-                type="text"
-                placeholder="School Name*"
-              />
-            </Col>
-            <Col span={6}>
-              <FField
-                name="question.difficultyLevel"
-                component={RatingControl}
-                customIcons={customIcons}
-              />
-            </Col>
-            <Col span={6}>
-              No Answers
-              <br/>
-              <Button type="link" danger onClick={() => {console.log('delete this question');}}>
-                <MinusOutlined /> Delete Question
-              </Button>
-            </Col>
-          </Row>
+          </Row>}
         </div>
-        <FFieldArray name='educations'>
-          {({fields, meta}) => {
-            return (
-              <StyledSpace direction="vertical">
-                {fields.map((name, index) => {
-                  return (
-                    <div key={name}>
-                      <StyledDivider/>
-                      <Row gutter={[{ xs: 8, sm: 16, md: 24, lg: 32 }, 16]}>
-                        <Col flex="none">
-                          <MinusCircleOutlined
-                            className="dynamic-delete-button"
-                            onClick={(e) => {
-                              e.preventDefault();
-                              e.stopPropagation();
-                              fields.remove(index);
-                            }}
-                          />
-                        </Col>
-                        <Col span={24}>
-                          <FField
-                            name={`${name}.school`}
-                            component={InputControl}
-                            type="text"
-                            placeholder="School Name"
-                          />
-                        </Col>
-                      </Row>
-                      <Row gutter={[{ xs: 8, sm: 16, md: 24, lg: 32 }, 16]}>
-                        <Col span={8}>
-                          <FField
-                            name={`${name}.degree`}
-                            component={InputControl}
-                            type="text"
-                            placeholder="Degree Type"
-                          />
-                        </Col>
-                        <Col span={16}>
-                          <FField
-                            name={`${name}.major`}
-                            component={InputControl}
-                            type="text"
-                            placeholder="Declared Major"
-                          />
-                        </Col>
-                      </Row>
-                      <Row gutter={[{ xs: 8, sm: 16, md: 24, lg: 32 }, 16]}>
-                        <Col span={8}>
-                          <FField
-                            name={`${name}.city`}
-                            component={InputControl}
-                            type="text"
-                            placeholder="City"
-                          />
-                        </Col>
-                        <Col span={4}>
-                          <FField
-                            name={`${name}.state`}
-                            component={InputControl}
-                            type="text"
-                            placeholder="State"
-                          />
-                        </Col>
-                        <Col span={6}>
-                        
-                        </Col>
-                        <Col span={6}>
-                        
-                        </Col>
-                      </Row>
-                      <Row gutter={[{ xs: 8, sm: 16, md: 24, lg: 32 }, 16]}>
-                        <Col span={24}>
-                          <FField
-                            name={`${name}.links`}
-                            component={InputControl}
-                            type="text"
-                            placeholder="Links"
-                          />
-                        </Col>
-                      </Row>
-                      <Row gutter={[16, 16]}>
-                        <Col span={24}>
-                        
-                        </Col>
-                      </Row>
-                    </div>
-                  )
-                })}
-                <Row gutter={[{ xs: 8, sm: 16, md: 24, lg: 32 }, 16]}>
-                  <Col span={24}>
-                    <Form.Item>
-                      <Button
-                        style={{width: '100%'}}
-                        type="dashed"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          e.stopPropagation();
-                          fields.push();
-                        }}
-                      >
-                        <PlusOutlined/> Add Question
-                      </Button>
-                    </Form.Item>
-                  </Col>
-                </Row>
-              </StyledSpace>
-            )
-          }}
-        </FFieldArray>
-      </div>
+        <div>
+          {values.questions.length === 0 &&
+          <Empty
+            image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
+            imageStyle={{height: 60}}
+            description={<span>Customize <a href="#API">Description</a></span>}
+          >
+            <Form.Item>
+              <Button type="primary"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        push('questions', null);
+                      }}
+              >
+                Create my first question!
+              </Button>
+            </Form.Item>
+          </Empty>}
+        </div>
+        <pre>{JSON.stringify(values, 0, 2)}</pre>
+      </AForm>
     )}
   />
 );
