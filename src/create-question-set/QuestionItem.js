@@ -42,7 +42,7 @@ export const QuestionItem = ({name, index, push, remove}) => (
           // validate={validations.required}
         />
       </Col>
-      <Col span={6}>
+      <Col span={4}>
         <FField
           name={`${name}.questionFormat`}
           initialValue={'multiple-choice'}
@@ -50,13 +50,16 @@ export const QuestionItem = ({name, index, push, remove}) => (
           options={questionTypeOptions}
         />
       </Col>
-      <Col span={8}>
+      <Col span={6}>
         <FField
           name={`${name}.questionRating`}
           component={RatingControl}
           customIcons={customIcons}
           initialValue={3}
         />
+      </Col>
+      <Col span={4}>
+        Answers(0)
       </Col>
     </Row>
     <Divider dashed />

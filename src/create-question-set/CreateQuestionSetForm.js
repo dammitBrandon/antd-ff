@@ -63,11 +63,15 @@ export const CreateQuestionSetForm = ({ isLoading }) => (
                values
              }) => (
       <AForm onFinish={handleSubmit}>
+        <div>
+          <h3>Questions</h3>
+          {values.questions.length}/15 questions added
+        </div>
         <Space direction="vertical">
           <FFieldArray name="questions">
             {({ fields, meta }) =>
               fields.map((name, index) => (
-                <div key={name}>
+                <div key={name} style={{width: '70vw'}}>
                   <QuestionItem name={name} index={index} push={push} remove={fields.remove} />
                 </div>
               ))
