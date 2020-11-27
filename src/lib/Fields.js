@@ -67,27 +67,15 @@ export const PasswordControl = ({ name, input, meta: { error, submitError, touch
   );
 };
 
-export const SimpleSelectControl = ({ input, name, onChange, meta: { error, submitError, touched, pristine, dirtySinceLastSubmit, submitting, ...meta }, ...rest}) => {
-  
+export const SimpleSelectControl = ({ input, options, meta, ...rest}) => {
   return (
-    <AForm.Item
-      name={name}
-      validateStatus={error && dirtySinceLastSubmit ? 'error' : ''}
-      help={error && touched && (
-        <span className='error'>{error}</span>
-      )}
-    >
-      <Select
-        labelInValue
-        defaultValue={{ value: 'lucy' }}
-        style={{ width: 120 }}
-        onChange={onChange}
-      >
-        <Option value="multiple-choice">Multiple Choice</Option>
-        <Option value="lucy">True or False</Option>
-  
-      </Select>
-    </AForm.Item>
+    <Select {...input} options={options}>
+      {options.map(option => (
+        <Option value={option.value} key={option.value}>
+          {option.label}
+        </Option>
+      ))}
+    </Select>
   );
 }
 

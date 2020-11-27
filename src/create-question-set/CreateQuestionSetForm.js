@@ -43,7 +43,7 @@ const onSubmit = async values => {
 export const CreateQuestionSetForm = ({ isLoading }) => (
   <FForm
     name="create-question-set-form"
-    initialValues={{questions: []}}
+    initialValues={{questions: [null]}}
     mutators={{
       ...arrayMutators
     }}
@@ -62,12 +62,12 @@ export const CreateQuestionSetForm = ({ isLoading }) => (
                values
              }) => (
       <AForm onFinish={handleSubmit}>
-        <div>
+        <Space direction="vertical">
           <FFieldArray name="questions">
             {({ fields, meta }) =>
               fields.map((name, index) => (
                 <div key={name}>
-                  Question {index + 1}
+                  <QuestionItem name={name} index={index} remove={fields.remove} />
                 </div>
               ))
             }
@@ -90,7 +90,7 @@ export const CreateQuestionSetForm = ({ isLoading }) => (
               </Form.Item>
             </Col>
           </Row>}
-        </div>
+        </Space>
         <div>
           {values.questions.length === 0 &&
           <Empty
