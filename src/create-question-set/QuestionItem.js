@@ -33,7 +33,7 @@ const questionTypeOptions = [
 export const QuestionItem = ({name, index, push, remove}) => (
   <>
     <Row gutter={[{ xs: 8, sm: 16, md: 24, lg: 32 }, 16]}>
-      <Col span={8}>
+      <Col span={10}>
         <FField
           name={`${name}.questionStatement`}
           component={InputControl}
