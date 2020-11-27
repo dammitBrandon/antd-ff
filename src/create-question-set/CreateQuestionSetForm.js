@@ -9,6 +9,7 @@ import { Button, Empty, Form as AForm, Row, Col, Space, Divider, Form } from 'an
 import { MinusCircleOutlined, PlusOutlined, MinusOutlined, FireOutlined, RightOutlined } from '@ant-design/icons';
 
 import { QuestionItem } from './QuestionItem';
+import { AnswerItem } from './AnswerItem';
 
 // ICONS FOR DIFFICULTY
 const customIcons = {
@@ -67,7 +68,7 @@ export const CreateQuestionSetForm = ({ isLoading }) => (
             {({ fields, meta }) =>
               fields.map((name, index) => (
                 <div key={name}>
-                  <QuestionItem name={name} index={index} remove={fields.remove} />
+                  <QuestionItem name={name} index={index} push={push} remove={fields.remove} />
                 </div>
               ))
             }

@@ -14,7 +14,7 @@ export const StyledInput = styled(Input)`
 export const RatingControl = ({name, input, value, customIcons, meta, ...rest}) => {
   return (
   <Rate
-    defaultValue={3}
+    {...input}
     character={({ index }) => {
       return customIcons[index + 1];
     }}

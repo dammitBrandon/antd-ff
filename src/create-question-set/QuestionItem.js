@@ -4,9 +4,10 @@ import { Field as FField, Form as FForm } from 'react-final-form';
 import { FieldArray as FFieldArray } from 'react-final-form-arrays';
 import styled from 'styled-components';
 import { InputControl, RatingControl, SimpleSelectControl } from '../lib/Fields';
-import {Layout, Button, Empty, Form as AForm, Row, Col, Select, Space, Divider, Form } from 'antd';
+import {Layout, Button, Empty, Form as AForm, Row, Col, Select, Space, Divider, Form, Rate } from 'antd';
 
 import { MinusCircleOutlined, PlusOutlined, MinusOutlined, FireOutlined, RightOutlined } from '@ant-design/icons';
+import { AnswerItem } from './AnswerItem';
 
 const { Option } = Select;
 
@@ -29,7 +30,7 @@ const questionTypeOptions = [
     value: 'true-false'
   }
 ]
-export const QuestionItem = ({name, index, remove}) => (
+export const QuestionItem = ({name, index, push, remove}) => (
   <>
     <Row gutter={[{ xs: 8, sm: 16, md: 24, lg: 32 }, 16]}>
       <Col span={8}>
@@ -49,11 +50,37 @@ export const QuestionItem = ({name, index, remove}) => (
           options={questionTypeOptions}
         />
       </Col>
+      <Col span={8}>
+        <FField
+          name={`${name}.questionRating`}
+          component={RatingControl}
+          customIcons={customIcons}
+          initialValue={3}
+        />
+      </Col>
     </Row>
     <Divider dashed />
     <Row gutter={[{ xs: 8, sm: 16, md: 24, lg: 32 }, 16]}>
+      <Col span={24}>
+        <FFieldArray   name={`${name}.possibleAnswers`} >
+          {({ fields, meta }) =>
+            fields.map((name, index) => (
+              <div key={name}>
+                <AnswerItem name={name} index={index} remove={fields.remove} />
+              </div>
+            ))
+          }
+        </FFieldArray>
+      </Col>
+    </Row>
+    <Row gutter={[{ xs: 8, sm: 16, md: 24, lg: 32 }, 16]}>
       <Col>
-        <Button type="primary" onClick={() => {console.log('add new answer to this question');}}>
+        <Button type="primary" onClick={(e) => {
+          console.log('add new answer to this question');
+          e.preventDefault();
+          e.stopPropagation();
+          push(`${name}.possibleAnswers`, null);
+        }}>
           <PlusOutlined /> Add Answer
         </Button>
       </Col>
