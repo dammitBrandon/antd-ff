@@ -21,7 +21,7 @@ export const AnswerItem = ({name, index, remove}) => (
           name={`${name}.possibleAnswer`}
           component={InputControl}
           type="text"
-          placeholder="What is it?"
+          placeholder={`Possible Answer #${index + 1}?`}
           // validate={validations.required}
         />
       </Col>

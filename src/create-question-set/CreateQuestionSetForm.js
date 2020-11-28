@@ -20,6 +20,25 @@ const customIcons = {
   5: <FireOutlined />,
 };
 
+
+const initValues = {
+  "questionFormat": "multiple-choice",
+  "questionRating": 5,
+  "questionStatement": "test 1",
+  "possibleAnswers": [
+    {
+      "possibleAnswer": "answer 1 = incorrect"
+    },
+    {
+      "possibleAnswer": "answer 2 = incorrect"
+    },
+    {
+      "possibleAnswer": "answer 3 = correct",
+      "isCorrect": true
+    }
+  ]
+};
+
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 export const StyledSpace = styled(Space)`
@@ -67,7 +86,12 @@ export const CreateQuestionSetForm = ({ isLoading }) => (
           <h3>Questions</h3>
           {values.questions.length}/15 questions added
         </div>
+        
+        
+        
         <Space direction="vertical">
+          
+          
           <FFieldArray name="questions">
             {({ fields, meta }) =>
               fields.map((name, index) => (
@@ -77,12 +101,17 @@ export const CreateQuestionSetForm = ({ isLoading }) => (
               ))
             }
           </FFieldArray>
+          
+          
+          
+          
           {values.questions.length > 0 &&
           <Row gutter={[{ xs: 8, sm: 16, md: 24, lg: 32 }, 16]}>
             <Col span={24}>
               <Form.Item>
                 <Button
                   style={{width: '100%'}}
+                  ghost
                   type="dashed"
                   onClick={(e) => {
                     e.preventDefault();
