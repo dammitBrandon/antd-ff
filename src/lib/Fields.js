@@ -1,10 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Input, Rate, Form as AForm, Select } from 'antd';
+import { Input, Rate, Form as AForm, Select, Typography } from 'antd';
 import ReactCodeInput from 'react-code-input';
 import { useField } from 'react-final-form';
+import { HighlightOutlined } from '@ant-design/icons';
 
 const { Option } = Select;
+const {Title} = Typography;
 
 export const StyledInput = styled(Input)`
   border-radius: 8px;
@@ -66,6 +68,20 @@ export const PasswordControl = ({ name, input, meta: { error, submitError, touch
     </AForm.Item>
   );
 };
+
+export const EditableTitleControl = (props) => {
+  return (
+    <Title
+      editable={{
+        icon: <HighlightOutlined />,
+        tooltip: 'click to edit text',
+        onChange: props.input.onChange,
+      }}
+      level={props.level} >
+      {props.input.value}
+    </Title>
+  )
+}
 
 export const SimpleSelectControl = ({ input, options, meta, ...rest}) => {
   return (
