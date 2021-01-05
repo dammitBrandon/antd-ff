@@ -38,3 +38,4 @@ sagaMiddleware.run(logActions);
 sagaMiddleware.run(sagas);
 
 export default store;
+export const dispatch = store.dispatch;

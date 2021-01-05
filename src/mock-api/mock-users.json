@@ -1,0 +1,14 @@
+[
+  {
+    "user": {
+      "id": "5db7c3f20c0c7a2dd982256e",
+      "firstName": "Brandon",
+      "lastName": "Bailey",
+      "email": "bailey1.brandon@gmail.com",
+      "role": "Teacher",
+      "orgId": "5db00ce2a12d0811d0a9da35",
+      "isOnboarded": false
+    },
+    "token": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWRiN2MzZjIwYzBjN2EyZGQ5ODIyNTZlIiwiZmlyc3ROYW1lIjoiQnJhbmRvbiIsImxhc3ROYW1lIjoiQmFpbGV5IiwiZW1haWwiOiJiYWlsZXkxLmJyYW5kb25AZ21haWwuY29tIiwicGhvbmVOdW1iZXIiOiIzMDE0MDQxMDAwIiwicm9sZSI6IlRlYWNoZXIiLCJvcmdJZCI6IjVkYjAwY2UyYTEyZDA4MTFkMGE5ZGEzNSJ9LCJpYXQiOjE1Nzg0Mjc5NjQsImV4cCI6MTU3OTAzMjc2NH0.gunQ5z3qh63jSvqzhjWy2BphsX7_o4xBtStGVEL7EMg "
+  }
+]
