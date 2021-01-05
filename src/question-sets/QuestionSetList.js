@@ -36,7 +36,7 @@ export const QuestionSetList = ({ questionSets, isLoading }) => {
           <Row gutter={[16,16]} align='middle' justify='center'>
             <Col xl={16}>
               <Item>
-                <Link to={`/teacher/edit-question-set/${qSet.id}`}>
+                <Link to={`/edit-question-set/${qSet.id}`}>
                   {qSet.title}
                 </Link>
               </Item>

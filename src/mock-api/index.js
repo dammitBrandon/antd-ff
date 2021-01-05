@@ -34,6 +34,27 @@ export const fetchQuestionSets = async () => {
   });
 };
 
+export const fetchQuestionSet = async (questionSetId) => {
+  console.log('MockAPI#fetchQuestionSet, questionSetId: ', questionSetId);
+  let questionSet = fakeDatabase.questionSets.filter(qs => qs.id === questionSetId);
+  return await delay(200).then(() => {
+    console.log('MockAPI#fetchQuestionSet, questionSet: ', questionSet);
+    if (questionSet.length === 1) {
+      return {
+        status: 'ok',
+        statusCode: 200,
+        data: questionSet
+      }
+    } else {
+      return {
+        status: 'not found',
+        statusCode: 404,
+        error: 'Not Found'
+      }
+    }
+  })
+};
+
 export const signUpResponse = async ({ firstName, lastName, email, password }) => (
   await delay(500).then(() => {
     console.log('MockAPI#signUpResponse, fields: %s %s %s %s', firstName, lastName, email, password);
@@ -99,7 +120,7 @@ export const createdResponse = () =>
     console.log('MockAPI#createdResponse, done');
     return {
       status: 'created',
-      statusCode: 2001
+      statusCode: 201
     };
   });
 

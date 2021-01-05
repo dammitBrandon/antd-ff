@@ -61,6 +61,12 @@ const mockRequest = async (url, method, requestData, origin) => {
   }
   
   try {
+    let questionSetId;
+    if ((/question-sets\/(.*)/g).test(url)) {
+      questionSetId = url.split('/')[1];
+      console.log('questionSetId: ', questionSetId);
+      url = 'question-sets/update';
+    }
     switch (url) {
       case 'auth/login':
         return await mockAPI.signInResponse({ email: config.email, password: config.password });
@@ -78,6 +84,8 @@ const mockRequest = async (url, method, requestData, origin) => {
         return await mockAPI.okResponse();
       case 'question-sets':
         return await mockAPI.fetchQuestionSets();
+      case 'question-sets/update':
+        return await mockAPI.fetchQuestionSet(questionSetId);
       default:
         console.log('default case, url: ', url);
         return await mockAPI.okResponse();

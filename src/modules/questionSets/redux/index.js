@@ -97,6 +97,11 @@ export function * onHandleQuestionSetRequest ({payload}) {
     console.log('#onHandleQuestionSetRequest, try block');
     const response = yield call(request.get, `/question-sets/${payload}`);
     console.log('#onHandleQuestionSetRequest, response: ', response);
+    const { data  } = response;
+  
+    return yield all([
+      put(handleQuestionSetSuccess(data))
+    ]);
   } catch (err) {
     console.error('Error, #onHandleQuestionSetRequest, err: ', err);
   }
@@ -157,6 +162,7 @@ const INITIAL_STATE = {
 
 export default function questionSets (state = INITIAL_STATE, action) {
   switch (action.type) {
+    case QUESTION_SET_REQUEST:
     case QUESTION_SET_DASHBOARD_REQUEST:
       return { ...state, isLoading: true };
     case QUESTION_SET_DASHBOARD_SUCCESS:

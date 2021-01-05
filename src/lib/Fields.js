@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Input, Rate, Form as AForm, Select, Typography } from 'antd';
 import ReactCodeInput from 'react-code-input';
-import { useField } from 'react-final-form';
+import { Field as FField ,useField } from 'react-final-form';
 import { HighlightOutlined } from '@ant-design/icons';
 
 const { Option } = Select;
@@ -13,14 +13,39 @@ export const StyledInput = styled(Input)`
   padding: 10px;
 `;
 
+export const FieldsControl = ({
+                                names,
+                                subscription,
+                                fieldsState = {},
+                                children,
+                                originalRender
+                              }) => {
+  if (!names.length) {
+    return (originalRender || children)(fieldsState)
+  }
+  const [name, ...rest] = names
+  return (
+    <FField name={name} subscription={subscription}>
+      {fieldState => (
+        <FieldsControl
+          names={rest}
+          subscription={subscription}
+          originalRender={originalRender || children}
+          fieldsState={{...fieldsState, [name]: fieldState}}
+        />
+      )}
+    </FField>
+  )
+};
+
 export const RatingControl = ({name, input, value, customIcons, meta, ...rest}) => {
   return (
-  <Rate
-    {...input}
-    character={({ index }) => {
-      return customIcons[index + 1];
-    }}
-  />
+    <Rate
+      {...input}
+      character={({index}) => {
+        return customIcons[index + 1];
+      }}
+    />
   )
 }
 
