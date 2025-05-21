@@ -9,7 +9,7 @@ import {EditQuestionSetForm} from './EditQuestionSetForm';
 import { FORM_ERROR } from 'final-form';
 import { handleQuestionSetRequest } from '../modules/questionSets/redux';
 
-const {Content, Sider, Header} = Layout;
+const { Content, Sider, Header } = Layout;
 
 const CenteredContainer = styled.div`
   height: 100%;
@@ -21,6 +21,7 @@ const CenteredContainer = styled.div`
 `;
 
 class EditQuestionSetScreen extends Component {
+  
   componentDidMount() {
     console.log('#componentDidMount');
     const questionSetId = this.props.match.params.questionSetId;
@@ -42,6 +43,7 @@ class EditQuestionSetScreen extends Component {
 }
 
 const mapStateToProps = (state) => {
+  console.log('mapStateToProps', state.questionSets.questionSet);
   return {
     questionSet: {
       "id": "5ff4bbd6d25de6ec14d28e80",

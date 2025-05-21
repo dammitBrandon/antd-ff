@@ -4,6 +4,7 @@ import { push } from 'connected-react-router';
 import request from '../../../lib/request';
 import { FORM_ERROR } from 'final-form';
 import { parseFormErrors } from '../../../lib/FormErrorHandler';
+import {normalizedQuestionSetData} from '../selectors';
 
 // Get Question Set by Id
 export const QUESTION_SET_REQUEST = 'teacher/question-set/QUESTION_SET_REQUEST';
@@ -100,7 +101,7 @@ export function * onHandleQuestionSetRequest ({payload}) {
     const { data  } = response;
   
     return yield all([
-      put(handleQuestionSetSuccess(data))
+      put(handleQuestionSetSuccess(data[0]))
     ]);
   } catch (err) {
     console.error('Error, #onHandleQuestionSetRequest, err: ', err);
@@ -145,9 +146,12 @@ export function * onHandleQuestionSetsDashboardRequest () {
     console.log('#onHandleQuestionSetsDashboardRequest, response: ', response);
     const { data  } = response;
     console.log('#onHandleQuestionSetsDashboardRequest, questionSets: ', data);
-  
+    const normalizedData = normalizedQuestionSetData(data);
+    console.log('#onHandleQuestionSetsDashboardRequest, normalizedData: ', normalizedData);
+    
     return yield all([
-      put(handleQuestionSetsDashboardSuccess(data))
+      put(handleQuestionSetsDashboardSuccess(normalizedData))
+      // put(handleQuestionSetsDashboardSuccess(data))
     ]);
   } catch (err) {
     console.error('Error, #onHandleQuestionSetsDashboardRequest, err: ', err);
@@ -170,6 +174,12 @@ export default function questionSets (state = INITIAL_STATE, action) {
         ...state,
         isLoading: false,
         data: action.payload
+      };
+    case QUESTION_SET_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        questionSet: action.payload
       };
     case QUESTION_SET_DASHBOARD_FAILURE:
       return {

@@ -1,0 +1,107 @@
+{
+  "_class": {
+    "id": "5fac9ed294beab007759ffe5",
+    "title": "Web Dev Apprenticeship",
+    "students": [
+      {
+        "id": "5fac9ed294beab007759ffe7",
+        "firstName": "brandon",
+        "lastName": "bailey",
+        "email": "bailey1.brandon@gmail.com",
+        "learningStyles": [
+          "auditory",
+          "visual"
+        ],
+        "orgId": "5fa4ac4de5e2c3720963b156"
+      },
+      {
+        "id": "5fad52570511d361164e6457",
+        "firstName": "jerald",
+        "lastName": "garrett",
+        "email": "jerald@tutord.io",
+        "learningStyles": [
+          "reading",
+          "visual"
+        ],
+        "orgId": "5fa4ac4de5e2c3720963b156"
+      },
+      {
+        "id": "5fad52750511d361164e6460",
+        "firstName": "kellee",
+        "lastName": "bassaragh",
+        "email": "kelleeb@tutord.io",
+        "learningStyles": [
+          "hands-on",
+          "visual",
+          "reading"
+        ],
+        "orgId": "5fa4ac4de5e2c3720963b156"
+      },
+      {
+        "id": "5faddcab48c1d83094f47f14",
+        "firstName": "reggie",
+        "lastName": "alleyne",
+        "email": "reggiealleyne89@gmail.com",
+        "learningStyles": [
+          "reading",
+          "visual"
+        ],
+        "orgId": "5fa4ac4de5e2c3720963b156"
+      }
+    ],
+    "tutorGroups": [
+      {
+        "id": "5ff9d52124bb9c0079d54c3f",
+        "title": "Cohort 0",
+        "students": [
+          {
+            "id": "5fac9ed294beab007759ffe7",
+            "firstName": "brandon",
+            "lastName": "bailey",
+            "email": "bailey1.brandon@gmail.com",
+            "role": "Student",
+            "learningStyles": [
+              "auditory",
+              "visual"
+            ],
+            "orgId": "5fa4ac4de5e2c3720963b156"
+          }
+        ],
+        "questionSets": [
+          {
+            "id": "5fe250dd80dc542c118814dd",
+            "title": "TutorD Scholars -- Jekyll Intro Updated"
+          }
+        ],
+        "dispatchInterval": "60",
+        "scheduledStartDateTime": "immediate"
+      },
+      {
+        "id": "5ffa7676f9883a0078de6a9a",
+        "title": "Cohort 1",
+        "students": [
+          {
+            "id": "5fac9ed294beab007759ffe7",
+            "firstName": "brandon",
+            "lastName": "bailey",
+            "email": "bailey1.brandon@gmail.com",
+            "role": "Student",
+            "learningStyles": [
+              "auditory",
+              "visual"
+            ],
+            "orgId": "5fa4ac4de5e2c3720963b156"
+          }
+        ],
+        "questionSets": [
+          {
+            "id": "5fe250dd80dc542c118814dd",
+            "title": "TutorD Scholars -- Jekyll Intro Updated"
+          }
+        ],
+        "dispatchInterval": "60",
+        "scheduledStartDateTime": "immediate"
+      }
+    ]
+  }
+}

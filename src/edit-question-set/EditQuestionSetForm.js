@@ -69,7 +69,7 @@ const onSubmit = async values => {
 
 export const EditQuestionSetForm = ({isLoading, questionSet}) => {
   const [editableStr, setEditableStr] = useState('This is an editable text.');
-  
+  console.log('EditQuestionSetForm#questionSet: ', questionSet);
   return (
     <MakeAsyncFunction
       listener={promiseListener}

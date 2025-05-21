@@ -18,9 +18,14 @@ function App() {
       App
       <br/>
       <ul>
+        <li><Link to="/set-phone-number-fform">Ant Final Form Set Phone Number </Link></li>
+        <li><Link to="/select-plan-fform">Ant Final Form Select Plan </Link></li>
+        <li><Link to="/file-upload-fform">Ant Final Form File Upload </Link></li>
         <li><Link to="/f-form">Final Form</Link></li>
         <li><Link to="/a-form">Ant Form</Link></li>
         <li><Link to="/on-boarding/0">On Boarding Wizard Form</Link></li>
+        <li><Link to="/">On Boarding Wizard Form</Link></li>
+        
       </ul>
     </CenteredContainer>
   );

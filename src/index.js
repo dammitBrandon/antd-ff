@@ -5,10 +5,13 @@ import './index.css';
 import 'antd/dist/antd.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import { SetPhoneNumberForm } from './SetPhoneNumberForm';
+import { SelectPlanForm } from './SelectPlanForm';
 import { FinalForm } from './FinalForm';
 import { AntForm } from './AntForm';
 import { WarningForm } from './WarningForm';
 import { SelectForm } from './SelectForm';
+import { AntFileUploadForm } from './AntFileUpload';
 import { ListForm } from './ListForm';
 import { ModalFormExample } from './ModalForm';
 import {AntSelectFForm} from './AntSelectFForm';
@@ -18,6 +21,7 @@ import {CreateQuestionSetScreen} from './create-question-set/CreateQuestionSetSc
 import QuestionSetScreen from './question-sets/QuestionSetScreen';
 import EditQuestionSetScreen from './edit-question-set/EditQuestionSetScreen';
 import WizardForm from './nested-wizard-form';
+import EditTutorGroupScreen from './triple-drawer-form/EditTutorGroupScreen';
 
 import store from './store';
 
@@ -35,16 +39,20 @@ ReactDOM.render(
           <Route exact path={'/'} component={App} />
           <Route exact path={'/f-form'} component={FinalForm} />
           <Route exact path={'/a-form'} component={AntForm} />
+          <Route exact path={'/set-phone-number-fform'} component={SetPhoneNumberForm} />
+          <Route exact path={'/select-plan-fform'} component={SelectPlanForm} />
           <Route exact path={'/w-form'} component={WarningForm} />
           <Route exact path={'/s-form'} component={SelectForm} />
           <Route exact path={'/l-form'} component={ListForm} />
           <Route exact path={'/m-form'} component={ModalFormExample} />
           <Route exact path={'/as-fform'} component={AntSelectFForm} />
+          <Route exact path={'/file-upload-fform'} component={AntFileUploadForm} />
           <Route exact path={'/test'} component={TestForm} />
           <Route exact path={'/dashboard'} component={TeacherDashboardScreen} />
           <Route exact path={'/create-question-set'} component={CreateQuestionSetScreen} />
           <Route exact path={'/edit-question-set/:questionSetId'} component={EditQuestionSetScreen} />
           <Route exact path={'/question-sets'} component={QuestionSetScreen} />
+          <Route exact path={'/edit-tutor-group'} component={EditTutorGroupScreen} />
           <Route path='/on-boarding/:step'
                  render={() => (
                    <WizardForm />
