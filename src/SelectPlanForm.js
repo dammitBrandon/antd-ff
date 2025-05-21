@@ -4,6 +4,7 @@ import {Row, Col, Button, Form, Form as AForm, Radio, Input, Switch, Typography,
 import { FormSpy, Field as FField, Form as FForm, useForm } from 'react-final-form';
 import { FORM_ERROR } from 'final-form';
 import {AntForm, composeValidators, email, required} from './AntForm';
+import {useSelector} from "react-redux";
 
 export const capitalize = value => {
     if (typeof value !== 'string') return '';
@@ -195,6 +196,24 @@ export const SelectPlanForm = () => {
         [isMonth]
     );
 
+    const monthlyPrices = useMemo(
+        () => PRICES?.filter((price) => price?.recurring?.interval === 'month'),
+        [PRICES]
+    );
+
+    const annualPrices = useMemo(
+        () => PRICES?.filter((price) => price?.recurring?.interval === 'year'),
+        [PRICES]
+    );
+
+    const prices = useMemo(() => {
+        if (isMonth) {
+            return monthlyPrices;
+        }
+
+        return annualPrices;
+    }, [annualPrices, isMonth, monthlyPrices]);
+
     return (
         <CenteredContainer>
             SelectPlanForm
@@ -246,7 +265,7 @@ export const SelectPlanForm = () => {
                                         {({ name, input, disabled = false, meta: { error, submitError, touched, pristine, dirtySinceLastSubmit, submitting, ...meta }, ...rest }) => (
                                             <>
                                                 <Radio.Group>
-                                                    {PRICES?.length > 0 && PRICES?.map((price, index) => (
+                                                    {prices?.length > 0 && prices?.map((price, index) => (
                                                         <RoundedContainer
                                                             key={index}
                                                             className={`hvr-float-shadow ${props.values.productPlan === price?.product?.id ? 'hvr-float-shadow-selected' : ''}`}
