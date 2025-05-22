@@ -252,8 +252,7 @@ export const SelectPlanForm = () => {
                                     />
                                 </Col>
                             </Row>
-                            <Row gutter={{xs: 8, sm: 16, md: 24, lg: 32}} justify='center'
-                                 style={{textAlign: 'center'}}>
+                            <Row gutter={{xs: 8, sm: 16, md: 24, lg: 32}} justify='center' style={{textAlign: 'center'}}>
                                 <Col>
                                     <FField
                                         name='productId'
@@ -274,6 +273,8 @@ export const SelectPlanForm = () => {
                                                             sm={16}
                                                             xs={24}
                                                             style={{
+                                                                float: 'left',
+                                                                minWidth: '260px',
                                                                 borderTop: `12px solid ${productPricesContainerColors[index]}`,
                                                                 minHeight: '420px',
                                                                 marginRight: `${index !== 0 ? 0 : 24}px`,
