@@ -17,7 +17,7 @@ const RadioControlInputAdapter = ({ name, input, label, style, disabled = false,
                 {prices?.length > 0 && prices?.map((price, index) => (
                     <Radio
                         key={`${price.id}-${index}`}
-                        value={price.product.id}
+                        value={price.id}
                         disabled={meta.submitting}
                         onClick={(event) => {
                             event.preventDefault();
@@ -27,7 +27,11 @@ const RadioControlInputAdapter = ({ name, input, label, style, disabled = false,
                         }}
 
                     >
-                        {price?.product?.name?.toUpperCase()}
+                        Product Name: {price?.product?.name?.toUpperCase()} <br/>
+                        Interval: {price?.recurring.interval?.toUpperCase()} <br/>
+                        Product ID: {price?.product?.id} <br/>
+                        Price ID: {price?.id} <br/>
+
                     </Radio>
                 ))}
             </Radio.Group>
@@ -231,7 +235,6 @@ export const SelectPlanForm = () => {
                              pristine,
                              submitError,
                              handleSubmit,
-                             form: {mutators: { push, pop }},
                              submitting,
                              hasValidationErrors,
                              hasSubmitErrors,
