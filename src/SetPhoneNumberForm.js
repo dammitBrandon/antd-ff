@@ -25,7 +25,7 @@ const onSubmit = async values => {
   // return { [FORM_ERROR]: 'Login Failed', verificationCode: 'Unknown Code' }
 };
 
-const PhoneNumberInputAdapter = ({ input, callingCode, countryCode, placeholder, label, meta, ...props })=> {
+const PhoneNumberInputAdapter = ({ input, callingCode, countryCode, placeholder, label, meta, ...props }) => {
   const { change } = useForm();
   
   console.log('PhoneNumberInputAdapter, input: ', input);

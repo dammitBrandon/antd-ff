@@ -6,6 +6,35 @@ import { FORM_ERROR } from 'final-form';
 import {AntForm, composeValidators, email, required} from './AntForm';
 import {useSelector} from "react-redux";
 
+const RadioControlInputAdapter = ({ name, input, label, style, disabled = false, meta, prices, ...props }, ) => {
+    const { change } = useForm();
+
+    return (
+        <>
+            <Radio.Group name={name} {...props} onChange={(event) => {
+                console.log('RadioControl testing, event', event);
+            }}>
+                {prices?.length > 0 && prices?.map((price, index) => (
+                    <Radio
+                        key={`${price.id}-${index}`}
+                        value={price.product.id}
+                        disabled={meta.submitting}
+                        onClick={(event) => {
+                            event.preventDefault();
+                            event.stopPropagation();
+                            change('productId', price.product.id);
+                            change('priceId', price.id);
+                        }}
+
+                    >
+                        {price?.product?.name?.toUpperCase()}
+                    </Radio>
+                ))}
+            </Radio.Group>
+        </>
+    );
+};
+
 export const capitalize = value => {
     if (typeof value !== 'string') return '';
     return value.charAt(0).toUpperCase() + value.slice(1);
@@ -150,36 +179,6 @@ export const StyledTitle = ({ level, children }) => (
     </Title>
 );
 
-export const RadioControl = ({
-                                 name,
-                                 input,
-                                 disabled = false,
-                                 meta: {
-                                     error,
-                                     submitError,
-                                     touched,
-                                     pristine,
-                                     dirtySinceLastSubmit,
-                                     submitting,
-                                     ...meta
-                                 },
-                                 ...rest
-                             }) => (
-    <AForm.Item
-        hasFeedback
-        validateStatus={(error || submitError) && touched ? 'error' : ''}
-        help={
-            (error || submitError) &&
-            touched && <span className='error'>{error || submitError}</span>
-        }
-    >
-        <Radio.Group>
-            {rest && rest.icon}
-        </Radio.Group>
-        {/*<pre>{JSON.stringify(meta, 0, 2)}</pre>*/}
-    </AForm.Item>
-);
-
 const onSubmit = async values => {
     await sleep(300)
     window.alert(JSON.stringify(values, 0, 2))
@@ -228,11 +227,21 @@ export const SelectPlanForm = () => {
                     sponsorshipProviderOptIn: false,
                     productPlan: ''
                 }}
-                render={(props) => {
-                    console.log('SelectPlanForm, props: ', props);
+                render={({
+                             pristine,
+                             submitError,
+                             handleSubmit,
+                             form: {mutators: { push, pop }},
+                             submitting,
+                             hasValidationErrors,
+                             hasSubmitErrors,
+                             dirtySinceLastSubmit,
+                             values,
+                             ...rest
+                }) => {
 
                     return (
-                        <AForm onFinish={props.handleSubmit}>
+                        <AForm onFinish={handleSubmit}>
                             <Row gutter={{xs: 8, sm: 16, md: 24, lg: 32}} justify='center'>
                                 <Col>Choose A Plan</Col>
                             </Row>
@@ -256,81 +265,15 @@ export const SelectPlanForm = () => {
                                 <Col>
                                     <FField
                                         name='productId'
-                                        component={RadioControl}
                                         type='radio'
                                         parse={value => value}
                                         format={capitalize}
-                                    >
-                                        {({ name, input, disabled = false, meta: { error, submitError, touched, pristine, dirtySinceLastSubmit, submitting, ...meta }, ...rest }) => (
-                                            <>
-                                                <Radio.Group>
-                                                    {prices?.length > 0 && prices?.map((price, index) => (
-                                                        <RoundedContainer
-                                                            key={index}
-                                                            className={`hvr-float-shadow ${props.values.productPlan === price?.product?.id ? 'hvr-float-shadow-selected' : ''}`}
-                                                            xl={5}
-                                                            md={12}
-                                                            sm={16}
-                                                            xs={24}
-                                                            style={{
-                                                                float: 'left',
-                                                                minWidth: '260px',
-                                                                borderTop: `12px solid ${productPricesContainerColors[index]}`,
-                                                                minHeight: '420px',
-                                                                marginRight: `${index !== 0 ? 0 : 24}px`,
-                                                                marginBottom: '2em'
-                                                            }}
-                                                        >
-                                                            <Radio {...input} {...rest} value={price.product.id} disabled={submitting} key={price.id}>
-                                                                <Row justify='start' style={{ textAlign: 'left', marginBottom: '.5em' }}>
-                                                                    {/* PACKAGE TITLE */}
-                                                                    <Col span={24}>
-                                                                    <span style={{ borderBottom: `3px solid ${productPricesContainerColors[index]}` }}>
-                                                                        {price?.product?.name?.toUpperCase()}
-                                                                    </span>
-                                                                    </Col>
-                                                                </Row>
-                                                                {/* MONTHLY PRICING */}
-                                                                <Row justify='start' style={{ textAlign: 'left' }}>
-                                                                    <Col span={24}>
-                                                                        <StyledTitle level={4}>
-                                                                            &#36;
-                                                                            {isMonth
-                                                                                ? `${price?.amount / 100}`
-                                                                                : `${price?.amount / 12 / 100}`}
-                                                                            /month
-                                                                        </StyledTitle>
-                                                                    </Col>
-                                                                </Row>
-                                                                <br />
-                                                                <Row>
-                                                                    <Col>
-                                                                        Placeholder
-                                                                    </Col>
-                                                                    <Divider style={{ color: '#626266' }} />
-                                                                    <Row justify='start' style={{ textAlign: 'left' }}>
-                                                                        <Col span={24}>
-                                                                            <ul>
-                                                                                <li>
-                                                                                <span style={{ fontWeight: 'bold', fontSize: 16 }}>
-                                                                                    Includes
-                                                                                </span>
-                                                                                </li>
-                                                                                {price?.product?.description}
-                                                                            </ul>
-                                                                        </Col>
-                                                                    </Row>
-                                                                </Row>
-                                                            </Radio>
-                                                        </RoundedContainer>
-                                                    ))}
-                                                </Radio.Group>
-                                            </>
-                                        )}
-                                    </FField>
+                                        component={RadioControlInputAdapter}
+                                        prices={prices}
+                                    />
                                 </Col>
                             </Row>
-                            <pre>{JSON.stringify(props.values, 0, 2)}</pre>
+                            <pre>{JSON.stringify(values, 0, 2)}</pre>
                         </AForm>
                     )}}
             />
